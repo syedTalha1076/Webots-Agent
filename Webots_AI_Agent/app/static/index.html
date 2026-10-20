@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Text-to-Robot Simulation Agent</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header class="top">
+  <div>
+    <h1>Text-to-Robot Simulation Agent</h1>
+    <p class="sub">Describe a robot task. The agent validates it, builds a Webots world, and you watch the real telemetry.</p>
+    <p class="dev">Developed by <strong>Syed Talha Ali Shah</strong></p>
+    <ul class="tech" aria-label="Technologies used">
+      <li>LangGraph</li><li>FastAPI</li><li>Webots</li><li>Python</li><li>Pydantic</li><li>Groq / Ollama LLM</li><li>Three.js</li>
+    </ul>
+  </div>
+  <div class="side">
+    <a class="gen-btn" href="/generate.html">Open Prompt-to-Simulation Generator &rarr;</a>
+    <div class="badges" aria-live="polite">
+      <span class="badge" id="b-webots">Webots: checking…</span>
+      <span class="badge" id="b-llm">Parser: …</span>
+      <span class="badge" id="b-conn">Live link: idle</span>
+    </div>
+  </div>
+</header>
+
+<main class="grid">
+  <section class="card task" aria-labelledby="t-h">
+    <h2 id="t-h">Task</h2>
+    <textarea id="prompt" rows="6" placeholder="Describe the robot, the room and what it should do…"></textarea>
+    <div class="examples" id="examples"></div>
+    <div class="row">
+      <button id="btn-create" class="primary">Create simulation</button>
+      <label class="check"><input type="checkbox" id="auto"> Start immediately</label>
+    </div>
+    <div class="controls" role="group" aria-label="Simulation controls">
+      <button id="btn-start" disabled>Start</button>
+      <button id="btn-pause" disabled>Pause</button>
+      <button id="btn-resume" disabled>Resume</button>
+      <button id="btn-reset" disabled>Reset</button>
+      <button id="btn-stop" class="danger" disabled>Emergency stop</button>
+    </div>
+    <p class="hint" id="hint"></p>
+  </section>
+
+  <section class="card view" aria-labelledby="v-h">
+    <div class="view-head">
+      <h2 id="v-h">Simulation view</h2>
+      <div class="tabs" role="tablist">
+        <button role="tab" id="tab-3d" aria-selected="true">3D</button>
+        <button role="tab" id="tab-2d" aria-selected="false">Top view</button>
+      </div>
+    </div>
+    <div class="stage" id="stage">
+      <div id="three"></div>
+      <canvas id="top" hidden></canvas>
+      <div class="empty" id="view-empty">No simulation yet. Create one to see the room, obstacles and robot.</div>
+    </div>
+    <p class="note"><strong>Synchronized visualization</strong> — drawn from live telemetry sent by the Webots controller.
+      It is not a video stream of Webots; the real 3D view is in the Webots window that opens on your PC.</p>
+  </section>
+
+  <section class="card tele" aria-labelledby="te-h">
+    <div class="view-head"><h2 id="te-h">Telemetry</h2><span class="pill" id="state-pill">no data</span></div>
+    <dl class="kv" id="kv"></dl>
+    <h3>Distance sensors <span class="muted">(raw IR, higher = closer)</span></h3>
+    <div id="bars"></div>
+    <p class="note" id="tele-note">Position is Supervisor ground truth; the navigator itself uses wheel odometry and IR sensors only.</p>
+  </section>
+
+  <section class="card agent" aria-labelledby="a-h">
+    <h2 id="a-h">Agent activity</h2>
+    <ol class="stages" id="stages"></ol>
+    <div id="plan" class="plan"></div>
+    <ul class="log" id="log" aria-live="polite"></ul>
+  </section>
+
+  <section class="card result" id="result-card" hidden aria-labelledby="r-h">
+    <h2 id="r-h">Result</h2>
+    <div id="result"></div>
+  </section>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="/js/simulation.js"></script>
+<script src="/js/telemetry.js"></script>
+<script src="/js/app.js"></script>
+</body>
+</html>

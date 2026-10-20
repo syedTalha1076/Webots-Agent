@@ -1,0 +1,92 @@
+{
+  "session_id": "sample000000",
+  "token": "standalone",
+  "backend_url": "",
+  "spec": {
+    "robot_type": "differential_drive",
+    "sensors": [
+      "distance"
+    ],
+    "task": "navigate_to_target",
+    "world": {
+      "width": 2.0,
+      "height": 2.0,
+      "obstacles": 4,
+      "obstacle_positions": [
+        [
+          -0.2,
+          -0.1
+        ],
+        [
+          0.15,
+          0.25
+        ],
+        [
+          0.45,
+          0.0
+        ],
+        [
+          -0.45,
+          0.45
+        ]
+      ]
+    },
+    "start_position": [
+      -0.7,
+      -0.7
+    ],
+    "start_heading": 0.7853981633974483,
+    "target_position": [
+      0.7,
+      0.7
+    ],
+    "max_speed": 4.0,
+    "planning_mode": "reactive"
+  },
+  "robot": {
+    "wheel_radius": 0.0205,
+    "axle_length": 0.052,
+    "max_wheel_speed": 6.28,
+    "robot_radius": 0.037
+  },
+  "obstacles": [
+    {
+      "x": -0.2,
+      "y": -0.1,
+      "size": 0.1
+    },
+    {
+      "x": 0.15,
+      "y": 0.25,
+      "size": 0.1
+    },
+    {
+      "x": 0.45,
+      "y": 0.0,
+      "size": 0.1
+    },
+    {
+      "x": -0.45,
+      "y": 0.45,
+      "size": 0.1
+    }
+  ],
+  "waypoints": [
+    [
+      0.7,
+      0.7
+    ]
+  ],
+  "nav": {
+    "max_speed": 4.0,
+    "goal_tol": 0.05,
+    "wp_tol": 0.08,
+    "obstacle_on": 180.0,
+    "obstacle_off": 90.0,
+    "wall_target": 150.0,
+    "stuck_window": 40.0,
+    "stuck_progress": 0.05,
+    "avoid_timeout": 25.0
+  },
+  "timeout_s": 300
+}

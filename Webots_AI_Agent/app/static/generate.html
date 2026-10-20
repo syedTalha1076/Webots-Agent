@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Text-to-Robot Simulation Agent - Generator</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<style>.wrap{max-width:900px;margin:0 auto;padding:16px 24px 32px}.wrap textarea{height:120px}
+pre{background:var(--stage);color:var(--ink);border:1px solid var(--rule);border-radius:var(--r);padding:12px;overflow:auto;white-space:pre-wrap;max-height:420px}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.back{color:var(--teal-d)}</style></head><body>
+<header class="top"><div><h1>Text-to-Robot Simulation Agent</h1>
+<p class="sub">Prompt-to-simulation generator: describe any supported robot task and Webots opens the generated world.</p>
+<p class="dev">Developed by <strong>Syed Talha Ali Shah</strong></p>
+<ul class="tech"><li>LangGraph</li><li>FastAPI</li><li>Webots</li><li>Python</li><li>Pydantic</li><li>Groq / Ollama LLM</li></ul></div>
+<div class="side"><a class="gen-btn" href="/">&larr; Back to main page</a></div></header>
+<div class="wrap"><section class="card"><h2>Your prompt</h2>
+<textarea id="p" placeholder="Describe the robot, the room and what it should do..."></textarea>
+<div class="btns"><button class="primary" onclick="go(true)">Generate and launch</button><button onclick="go(false)">Generate only (validate)</button></div>
+<h3>Examples (click to fill)</h3><div class="examples" id="ex"></div></section>
+<section class="card" style="margin-top:14px"><h2>Result</h2><pre id="out">Ready.</pre></section></div>
+<script>
+fetch('/api/generate/examples').then(r=>r.json()).then(l=>{ex.innerHTML=l.map(t=>`<button onclick="p.value=this.textContent">${t}</button>`).join('')});
+async function go(launch){out.textContent=launch?'Generating and launching Webots... this waits until the simulation finishes.':'Generating and validating...';
+ try{const r=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:p.value,launch})});
+ const d=await r.json();out.textContent=(d.ok?'SUCCESS: ':'FAILED at '+d.stage+': ')+d.message+'\n\n'+JSON.stringify(d,null,2)}catch(e){out.textContent='Request failed: '+e}}
+</script></body></html>

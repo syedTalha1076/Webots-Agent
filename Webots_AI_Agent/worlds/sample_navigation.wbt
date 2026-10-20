@@ -1,0 +1,47 @@
+#VRML_SIM R2025a utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/floors/protos/RectangleArena.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/factory/containers/protos/WoodenBox.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/robots/gctronic/e-puck/protos/E-puck.proto"
+
+WorldInfo {
+  title "Text-to-Robot session"
+  basicTimeStep 32
+  coordinateSystem "ENU"
+}
+Viewpoint {
+  orientation -0.39093 0.39093 0.83327 1.75219
+  position 0 -1.920 2.310
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  floorSize 2.0 2.0
+  wallHeight 0.1
+}
+DEF TARGET Solid {
+  translation 0.7 0.7 0.001
+  name "target"
+  children [
+    Shape {
+      appearance PBRAppearance { baseColor 1 0 0 roughness 1 metalness 0 }
+      geometry Cylinder { height 0.002 radius 0.05 }
+    }
+  ]
+}
+WoodenBox { translation -0.2 -0.1 0.0500 name "obstacle_0" size 0.1 0.1 0.1 mass 5 }
+WoodenBox { translation 0.15 0.25 0.0500 name "obstacle_1" size 0.1 0.1 0.1 mass 5 }
+WoodenBox { translation 0.45 0.0 0.0500 name "obstacle_2" size 0.1 0.1 0.1 mass 5 }
+WoodenBox { translation -0.45 0.45 0.0500 name "obstacle_3" size 0.1 0.1 0.1 mass 5 }
+DEF ROBOT E-puck {
+  translation -0.7 -0.7 0
+  rotation 0 0 1 0.78540
+  name "epuck"
+  controller "navigation_controller"
+  controllerArgs [ "../../worlds/sample_config.json" ]
+  supervisor TRUE
+}
